@@ -9,8 +9,8 @@ export default function Register() {
 <div className="register">
     <div className="registerWrapper">
     <div className="registerLeft">
-        <h1 className="registerLeftTitle">Reactsocial</h1>
-        <span className="registerLeftDesc">Connect with your friends and the world around you on Reactsocial.</span>
+        <h1 className="registerLeftTitle">Social Media App</h1>
+        <span className="registerLeftDesc">Connect with your friends and the world around you on Social Media App.</span>
     </div>
     <div className="registerRight">
 

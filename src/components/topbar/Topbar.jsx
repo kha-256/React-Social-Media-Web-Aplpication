@@ -10,7 +10,7 @@ export default function Topbar() {
         <div className="topbarContainer">
 
             <div className="topbarLeft">
-                <span className="logo">ReactSocial</span>
+                <span className="logo">Social Media App</span>
             </div>
             <div className="topbarCenter">
                 <div className="searchbar">
