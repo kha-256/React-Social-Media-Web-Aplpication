@@ -1,8 +1,12 @@
 const router= require("express").Router();
 const User=require("../models/User")
 const bcrypt= require("bcrypt") //for hashing the password
+const jwt = require('jsonwebtoken'); //token generation
+const crypto = require('crypto');//token generation
 
-//register
+
+
+//Register
 router.post("/register", async(req,resp)=>{
     if (req.body.username && req.body.email && req.body.password) {
         console.log("Signup Request Body:", req.body);
@@ -42,4 +46,44 @@ router.post("/register", async(req,resp)=>{
       }
   })
   
+
+  //login
+
+  //secret key for token generation
+  const secretKey = crypto.randomBytes(32).toString('hex');
+console.log("Secret Key:", secretKey);
+
+  router.post("/login", async(req,resp)=>{
+    if (req.body.email && req.body.password) {
+      console.log("Login Request Body:", req.body);
+  
+      try {
+        const user = await User.findOne({email: req.body.email});
+       if(!user) {
+        resp.status(404).json({ error: "user not found" });
+        return
+       }
+
+       const validPassword = await bcrypt.compare(req.body.password, user.password);
+       if(!validPassword){
+        resp.status(400).json({ error: "wrong password" });
+        return;
+       } 
+  
+        if (user && validPassword) {
+          const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '24h' });
+          resp.json({ user, token });
+        }
+      } catch (error) {
+        console.error("Error during login:", error.message);
+        resp.status(500).send("An error occurred during login.");
+        return
+      }
+    } else {
+      resp.status(400).json({ error: "Email and password are required" });
+      return;
+    }
+  })
+  
+
 module.exports= router
