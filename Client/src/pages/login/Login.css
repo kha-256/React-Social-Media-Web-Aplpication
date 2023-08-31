@@ -1,7 +1,7 @@
 .login{
     width: 100vw;
     height: 100vh;
-    background-color: rgb(243, 240, 240);
+    background-color: rgb(219, 223, 221);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,11 +28,12 @@
     color: #244167;
     margin-bottom: 10px;
     font-weight: 800;
+    font-size: 2.3rem;
 }
 
 .loginLeftDesc{
-    font-weight: 500;
-    font-size: 24px;
+    font-weight: 700;
+    font-size: 1.3rem;
 }
 
 .loginRight{
@@ -98,4 +99,14 @@ padding-bottom: 20px;
     color: white;
     cursor: pointer;
     font-size: 15px;
+}
+
+.password-toggle{
+    color: rgb(72, 66, 66);
+    font-size: 14px;
+    position: relative;
+    right: -120px;
+    top: -10px;
+    cursor: pointer;
+
 }
