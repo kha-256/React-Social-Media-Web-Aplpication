@@ -4,6 +4,9 @@ import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Register from "./pages/Register/Register";
 import { Routes,Route } from 'react-router-dom';
+import { Provider } from "react";
+
+
 
 function App() {
 
