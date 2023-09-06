@@ -2,6 +2,9 @@ import React from "react";
 import "./Login.css"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userLogin } from "../../store/slices/Userslice";
+import { addToken } from "../../store/slices/Userslice";
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
@@ -28,15 +31,44 @@ export default function Login() {
   };
 
   const navigate= useNavigate();
+  const dispatch= useDispatch();
 
-  const homeNavigation=()=>{
-    if (formData.email === "" || formData.password === "" ) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    // Log the data before sending it to the backend
+    console.log("Email:", formData.email);
+    console.log("Password:", formData.password);
+  
+    if (formData.email !== "" && formData.password !== "") {
+
+      try {
+        const response = await dispatch(userLogin(formData));
+        console.log('API response: ', response);
+  
+        if (response.error) {
+          console.log("Error during login:", response.error);
+          // Handle the error here (e.g., display it to the user)
+        } else {
+          // Successful login
+          const { user, token } = response.payload;
+          localStorage.setItem("user", JSON.stringify(user));
+          dispatch(addToken(token));
+          setFormData({
+            email: "",
+            password: ""
+          });
+        }
+      } catch (error) {
+        // Handle other errors if needed
+        console.log("Error during login:", error.message);
+      }
+     
+    } else{
       alert("Please fill in the required fields");
     }
-    else{
-      navigate("/home")
-    }
   }
+  
 
 
   const registerNavigation=()=>{
@@ -70,7 +102,7 @@ export default function Login() {
  <span onClick={togglePasswordVisibility} className="password-toggle">
         {passwordVisible ? 'Show Password' : 'Show Password'}
       </span>
-    <button className="loginButton" onClick={homeNavigation}>Log In</button>
+    <button className="loginButton" onClick={handleSubmit}>Log In</button>
     <span className="loginForget">Forget Password?</span>
     <button className="loginRegistrationButton" onClick={registerNavigation}>Create a New Account</button>
 
