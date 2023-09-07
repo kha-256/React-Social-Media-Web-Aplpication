@@ -85,14 +85,19 @@ router.get('/:id', async (req, resp) => {
 
 router.get('/timeline/all', async (req, resp) => {
     try {
+        // Get the current user
      const currentUser= await User.findById(req.body.userId);
+     //  Get the posts of the current user
      const userPosts= await Post.find({userId: currentUser._id});
+      // Get posts from the user's friends
+     // promise.all waits for all of these promises to resolve.
      const friendsPosts= await Promise.all(
         currentUser.followings.map((friendId)=>{
             return Post.find({userId: friendId});
         })
      );
 
+     // Combine and send back all posts
      resp.json(userPosts.concat(...friendsPosts))
      
     } catch (err) {
