@@ -58,6 +58,7 @@ export default function Login() {
             email: "",
             password: ""
           });
+          navigate('/home');
         }
       } catch (error) {
         // Handle other errors if needed
@@ -87,7 +88,7 @@ export default function Login() {
     </div>
     <div className="loginRight">
 
-    <div className="loginForm">
+    <form className="loginForm" onSubmit={handleSubmit}>
     <input placeholder="Email" className="loginInput" 
       name="email"
       value={formData.email}
@@ -102,12 +103,12 @@ export default function Login() {
  <span onClick={togglePasswordVisibility} className="password-toggle">
         {passwordVisible ? 'Show Password' : 'Show Password'}
       </span>
-    <button className="loginButton" onClick={handleSubmit}>Log In</button>
+    <button className="loginButton" type="submit">Log In</button>
     <span className="loginForget">Forget Password?</span>
     <button className="loginRegistrationButton" onClick={registerNavigation}>Create a New Account</button>
 
 
-    </div>
+    </form>
     </div>
 
     </div>
