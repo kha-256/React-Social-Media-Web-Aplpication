@@ -2,6 +2,8 @@ import React from "react";
 import "./register.css"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userSignUp } from "../../store/slices/Userslice";
+import { useDispatch } from "react-redux";
 
 
 
@@ -11,7 +13,7 @@ export default function Register() {
     userName: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword:""
   });
 
   const handleInput = (event) => {
@@ -22,15 +24,44 @@ export default function Register() {
     })
   }
 
-  const navigate = useNavigate();
+ 
 
-  const homeNavigation = () => {
-    if (formData.userName === "" || formData.email === "" || formData.password === "" || formData.confirmPassword === "") {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (formData.userName === "" || formData.email === "" || formData.password === "" || formData.confirmPassword=== "") {
       alert("Please fill in the required fields");
     } else if (formData.password !== formData.confirmPassword) {
       alert("The passwords you entered do not match. Please check and re-enter.");
     } else {
-      navigate("/home");
+      try {
+        console.log(formData)
+        const response = await dispatch(userSignUp(formData));
+        console.log('API response: ', response);
+
+
+        if (response.error) {
+          console.log("Error during Signup:", response.error);
+          // Handle the error here (e.g., display it to the user)
+        } else {
+          // Successful signup
+          setFormData({
+            email:"",
+            password:"",
+            userName:"",
+            confirmPassword:""
+          });
+
+         
+        }
+      } catch (error) {
+        // Handle other errors if needed
+        console.log("Error during login:", error.message);
+      }
+
     }
   }
 
@@ -49,14 +80,14 @@ export default function Register() {
           </div>
           <div className="registerRight">
 
-            <div className="registerForm">
-              <input placeholder="Username" className="registerInput"
+            <form className="registerForm" onSubmit={handleSubmit}>
+              <input placeholder="UserName" className="registerInput"
                 name="userName"
                 value={formData.userName}
                 onChange={handleInput}
               />
               <input placeholder="Email" className="registerInput"
-              type="email"
+                type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInput}
@@ -68,16 +99,16 @@ export default function Register() {
                 onChange={handleInput}
               />
               <input placeholder="Confirm Password" className="registerInput"
+              name="confirmPassword"
                 type="password"
-                name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleInput}
               />
-              <button className="registerButton" onClick={homeNavigation}>Sign Up</button>
+              <button className="registerButton" type="submit">Sign Up</button>
               <button className="registerRegistrationButton" onClick={loginNavigation}>Go Back</button>
 
 
-            </div>
+            </form>
           </div>
 
         </div>
