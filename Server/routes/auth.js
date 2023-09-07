@@ -2,13 +2,15 @@ const router = require("express").Router();
 const User = require("../models/User")
 const bcrypt = require("bcrypt") //for hashing the password
 const jwt = require('jsonwebtoken'); //token generation
-const crypto = require('crypto');//token generation
+const crypto = require('crypto');//to creating secret key
 
 
 
 //Register
 router.post("/register", async (req, resp) => {
-  if (req.body.username && req.body.email && req.body.password) {
+
+  // check if all fields data is coming from frontend so then we proceed
+  if (req.body.userName && req.body.email && req.body.password) {
     console.log("Signup Request Body:", req.body);
 
     try {
@@ -25,7 +27,7 @@ router.post("/register", async (req, resp) => {
 
         //creating new user
         const newUser = new User({
-          username: req.body.username,
+          username: req.body.userName,
           email: req.body.email,
           password: hashedPassword,
         });
@@ -42,7 +44,7 @@ router.post("/register", async (req, resp) => {
       resp.status(500).send("An error occurred during signup.");
     }
   } else {
-    resp.status(400).json({ error: "username, email, and password are required" });
+    resp.status(400).json({ error: "userName, email, and password are required" });
   }
 })
 
