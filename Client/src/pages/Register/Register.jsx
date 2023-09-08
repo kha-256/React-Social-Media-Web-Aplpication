@@ -3,7 +3,7 @@ import "./register.css"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userSignUp } from "../../store/slices/Userslice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 
@@ -13,7 +13,7 @@ export default function Register() {
     userName: "",
     email: "",
     password: "",
-    confirmPassword:""
+    confirmPassword: ""
   });
 
   const handleInput = (event) => {
@@ -24,15 +24,15 @@ export default function Register() {
     })
   }
 
- 
+
 
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.userName === "" || formData.email === "" || formData.password === "" || formData.confirmPassword=== "") {
+    if (formData.userName === "" || formData.email === "" || formData.password === "" || formData.confirmPassword === "") {
       alert("Please fill in the required fields");
     } else if (formData.password !== formData.confirmPassword) {
       alert("The passwords you entered do not match. Please check and re-enter.");
@@ -47,15 +47,16 @@ export default function Register() {
           console.log("Error during Signup:", response.error);
           // Handle the error here (e.g., display it to the user)
         } else {
+          navigate("/")
           // Successful signup
           setFormData({
-            email:"",
-            password:"",
-            userName:"",
-            confirmPassword:""
+            email: "",
+            password: "",
+            userName: "",
+            confirmPassword: ""
           });
 
-         
+
         }
       } catch (error) {
         // Handle other errors if needed
@@ -64,6 +65,8 @@ export default function Register() {
 
     }
   }
+
+  const { loading } = useSelector((state) => state.user)
 
   const loginNavigation = () => {
 
@@ -95,16 +98,19 @@ export default function Register() {
               <input placeholder="Password" className="registerInput"
                 type="password"
                 name="password"
+                minLength={6}
                 value={formData.password}
                 onChange={handleInput}
               />
               <input placeholder="Confirm Password" className="registerInput"
-              name="confirmPassword"
+                name="confirmPassword"
                 type="password"
+                minLength={6}
                 value={formData.confirmPassword}
                 onChange={handleInput}
               />
-              <button className="registerButton" type="submit">Sign Up</button>
+              <button className="registerButton" type="submit">
+                {loading ? 'Loading' : 'Sign Up'}</button>
               <button className="registerRegistrationButton" onClick={loginNavigation}>Go Back</button>
 
 
