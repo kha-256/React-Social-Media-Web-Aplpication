@@ -3,13 +3,21 @@ import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { useNavigate } from "react-router-dom";
 
 
 export default function Topbar() {
+    
+    const navigate= useNavigate();
+
+    const homepaheNavigation=()=>{
+        navigate('/home')
+    }
+
     return (
         <div className="topbarContainer">
 
-            <div className="topbarLeft">
+            <div className="topbarLeft" onClick={homepaheNavigation}>
                 <span className="logo">Social Media App</span>
             </div>
             <div className="topbarCenter">
