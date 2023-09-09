@@ -7,6 +7,8 @@ import Rightbar from "../../components/rightbar/Rightbar";
 
 
 export default function Profile() {
+
+  const PF = import.meta.env.VITE_REACT_APP_PUBLIC_FOLDER;
     return (
       <>
 <Topbar/>
@@ -15,8 +17,8 @@ export default function Profile() {
 <div className="profileRight">
 <div className="profileRightTop">
 <div className="profileCover">
-<img className="profileCoverImg" src="/assets/post/3.jpeg" alt=""/>
- <img className="profileUserImg" src="/assets/person/7.jpeg" alt=""/>
+<img className="profileCoverImg" src={`${PF}post/3.jpeg` }alt=""/>
+ <img className="profileUserImg" src={`${PF}person/7.jpeg`} alt=""/>
 </div>
 
 <div className="profileInfo">
