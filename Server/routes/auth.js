@@ -73,7 +73,7 @@ router.post("/login", async (req, resp) => {
       }
 
       if (user && validPassword) {
-        const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '24h' });
+        const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
         resp.json({ user, token });
       }
     } catch (error) {
