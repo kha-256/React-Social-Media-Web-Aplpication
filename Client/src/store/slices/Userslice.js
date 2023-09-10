@@ -43,6 +43,7 @@ export const userSignUp = createAsyncThunk(
   }
 )
 
+
 const UserSlice = createSlice({
   name: 'user',
   initialState,
@@ -103,7 +104,7 @@ const UserSlice = createSlice({
         state.loading=false;
         state.error = action.error.message;
       })
-
+     
   }
 
 })
