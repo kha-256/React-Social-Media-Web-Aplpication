@@ -106,4 +106,20 @@ router.get('/timeline/:userId', async (req, resp) => {
   
   });
 
+
+  //get timeline post of user only
+
+router.get('/profile/:username', async (req, resp) => {
+    try {
+        const user= await User.findOne({username: req.params.username});
+        const posts= await Post.find({userId: user._id});
+        resp.status(200).json(posts);
+   
+     
+    } catch (err) {
+      resp.status(500).json(err);
+    }
+  
+  });
+
 module.exports = router;
