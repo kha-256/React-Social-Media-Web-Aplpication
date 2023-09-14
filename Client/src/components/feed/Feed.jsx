@@ -21,9 +21,6 @@ export default function Feed() {
     
 const posts = useSelector(state => state.post.posts);
 
-console.log(posts)
-
-
 
     return (
 <div className="feed">

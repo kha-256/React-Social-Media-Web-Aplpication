@@ -8,6 +8,10 @@ import Rightbar from "../../components/rightbar/Rightbar";
 
 export default function Profile() {
 
+  const user = JSON.parse(localStorage.getItem('user'));
+    const userName = user.username;
+    console.log('userName : ', userName)
+
   const PF = import.meta.env.VITE_REACT_APP_PUBLIC_FOLDER;
     return (
       <>
@@ -29,7 +33,9 @@ export default function Profile() {
 
 </div>
 <div className="profileRightBottom">
-<Feed/>
+
+{/*since we have differnt feed for profile and home page so we pass username in this feed  */}
+<Feed username={userName}/>
 <Rightbar profile/> {/* this profile is a prop which indicates this righbar is from profile page */}
 </div>
 </div>
