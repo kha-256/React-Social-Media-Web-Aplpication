@@ -47,9 +47,15 @@ router.delete("/:id", async (req, resp) => {
 
 // Get a user
 
-router.get('/:id', async (req, resp) => {
+router.get('/', async (req, resp) => {
+
+  const userId=req.query.userId;
+  const username=req.query.username
+console.log(username)
   try {
-    const user = await User.findById(req.params.id);
+    const user = userId 
+    ? await User.findById(userId)
+    : await User.findOne({username:username})
     const { password, isAdmin, updatedAt, ...other } = user._doc // we will be passing the other fields apart from the three fields we have defined
     resp.status(200).json(other);
   } catch (err) {

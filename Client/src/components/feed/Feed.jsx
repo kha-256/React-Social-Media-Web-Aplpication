@@ -6,11 +6,12 @@ import { getTimelinePost } from "../../store/slices/PostSlice";
 import { useDispatch,useSelector } from "react-redux";
 import { useEffect,  } from "react";
 
-export default function Feed() {
+export default function Feed({username}) {
 
     const dispatch=useDispatch();
     const user = JSON.parse(localStorage.getItem('user'));
     const userId = user._id;
+  
     
     useEffect(()=>{
         dispatch(getTimelinePost(userId))
