@@ -1,26 +1,29 @@
 import "./Post.css";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { getUser } from "../../store/slices/PostUser";
 import { useDispatch,useSelector } from "react-redux";
+import { getUser } from "../../store/slices/PostUser";
 import { useEffect,  } from "react";
 import { useState } from "react";
 import {format} from "timeago.js"
 
-export default function Post({post}) {
+export default function Post({post,user}) {
 
     const [like, setLike]=useState(post.like);
     const [isLiked, setIsLiked]=useState(false)
 
-    const dispatch=useDispatch();
     
- 
-    useEffect(() => {
-        dispatch(getUser(post.userId));
-    }, [dispatch, post.userId]);
     
-    const postUser = useSelector(state => state.postuser.postUser);
-    
-    console.log(postUser);
+ {/*
+    // Get the user data from the Redux store
+  const user = useSelector(state => state.postUser.postUser[post.userId]);
+
+  useEffect(() => {
+    // Dispatch the getUser action when the component mounts
+    dispatch(getUser(post.userId));
+  }, [dispatch, post.userId]);
+  
+    console.log("postUser ",user);
+*/}
 
     const PF = import.meta.env.VITE_REACT_APP_PUBLIC_FOLDER;
 
@@ -29,14 +32,14 @@ export default function Post({post}) {
         setIsLiked(!isLiked)
     }
 
-    const user = useSelector(state => state.postuser.postUser);
+   
 
 
    // const user= Users.filter((u)=> u.id === post.userId)[0].username;
    // console.log(user)
     return (
 <div className="post">
-{user &&
+{user&&
 <div className="postWrapper">
 
 <div className="postTop">

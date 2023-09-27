@@ -1,36 +1,38 @@
 import "./feed.css";
 import Share from "../share/Share";
 import Post from "../post/Post";
-import { Posts } from "../../dummyData";
 import { getTimelinePost } from "../../store/slices/PostSlice";
-import { useDispatch,useSelector } from "react-redux";
-import { useEffect,  } from "react";
+import { getUser } from "../../store/slices/PostUser";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
-export default function Feed({username}) {
-
-    const dispatch=useDispatch();
-    const user = JSON.parse(localStorage.getItem('user'));
-    const userId = user._id;
+export default function Feed({ username }) {
+  const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userId = user._id;
   
-    
-    useEffect(()=>{
-        dispatch(getTimelinePost(userId))
+  const posts = useSelector(state => state.post.posts);
+  const users = useSelector(state => state.postUser.postUser);
 
-    },[dispatch,userId])
+  useEffect(() => {
+    dispatch(getTimelinePost(userId));
+  }, [dispatch, userId]);
+  
+  useEffect(() => {
+    posts && posts.forEach((post) => {
+      dispatch(getUser(post.userId));
+    });
+  }, [dispatch, posts]);
+  
 
-
-    
-const posts = useSelector(state => state.post.posts);
-
-
-    return (
-<div className="feed">
-<div className="feedWrapper">
-<Share/>
-</div>
-   {posts && posts.map((post) => (
-                    <Post key={post._id} post={post} />
-                ))}
-</div>
-    );
+  return (
+    <div className="feed">
+      <div className="feedWrapper">
+        <Share />
+      </div>
+      {posts && posts.map((post) => (
+        <Post key={post._id} post={post} user={users[post.userId]} />
+      ))}
+    </div>
+  );
 }

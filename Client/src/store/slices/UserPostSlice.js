@@ -12,7 +12,7 @@ let initialState = {
 
 export const getTimelinePost = createAsyncThunk(
     'userPost',
-    async (userId) => {
+    async (username) => {
         try {
             const response = await axios.get(`http://127.0.0.1:8800/api/posts/timeline/${userId}`)
             return response.data;

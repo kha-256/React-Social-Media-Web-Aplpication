@@ -7,7 +7,7 @@ const store= configureStore({
     reducer:{
         user: Userslice,
         post: PostSlice,
-        postuser:PostUser,
+        postUser:PostUser,
     }
 })
 
